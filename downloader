@@ -1,0 +1,24 @@
+#! /usr/bin/python3
+import subprocess
+from pathlib import Path
+def download(urls):
+    for url in urls:
+        subprocess.call(["wget", url])
+def downloadFile(input):
+    urls = []
+    with open(input) as my_file:
+        for line in my_file:
+            line = line.strip("\n")
+            line = line.strip("\t")
+            urls.append(line)
+    download(urls)
+def downloadLink(input):
+    urls = input.split(",")
+    download(urls)
+input = input("Enter your file address/name or url:")
+file = Path(input)
+if file.is_file():
+    downloadFile(input)
+    # file exists
+else:
+    downloadLink(input)
